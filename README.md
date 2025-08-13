@@ -17,7 +17,7 @@ Para funcionar os sistemas é necessário:
         - **IMPORTANTE**: Reiniciar a máquina quando estiver tudo ok, antes de seguir para os próximos passos.
     - Sistema Operacional Linux: Apenas instalar o docker.
 
-2. Fazer um clone no repositório https://github.com/justinojjsj/pi5-tempguardian.git
+2. Fazer um clone no repositório https://github.com/justinojjsj/pi6-tempguardianV2.git
     * *Observação: Por favor, antes de dar um push, crie sua branch, não dê push diretamente na main* 
     
 3. Criar a rede docker que será compartilhada entre os sistemas:
