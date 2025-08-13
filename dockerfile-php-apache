@@ -1,0 +1,10 @@
+FROM php:8.3.17-apache
+
+RUN apt-get update -y;
+RUN apt-get install -y nano;
+RUN apt-get install -y vim;
+RUN apt-get install -y net-tools;
+RUN docker-php-ext-install mysqli pdo pdo_mysql && docker-php-ext-enable pdo_mysql
+
+#RUN cd /etc/apache2/sites-available/ && a2ensite site1.conf -não funcionando
+#RUN /etc/init.d/apache2 restart -não funcionando

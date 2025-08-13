@@ -1,0 +1,85 @@
+version: '3.2'
+
+services:
+  container_tempguardian_php-apache:
+    build:
+      context: .
+      dockerfile: dockerfile-php-apache
+    container_name: tempguardian_php_apache
+    restart: always
+    volumes:
+      - ./_web:/var/www/html
+    ports:
+      - 4087:80
+    networks:
+      - rede_default
+    working_dir: /var/www/html
+    environment:
+      PHP_ERROR_REPORTING: E_ALL & ~E_NOTICE
+      PHP_DISPLAY_ERRORS: "Off"
+      PHP_DISPLAY_STARTUP_ERRORS: "Off"
+      PHP_LOG_ERRORS: "On"
+      PHP_MAX_EXECUTION_TIME: 60
+      PHP_MEMORY_LIMIT: 128M
+      PHP_POST_MAX_SIZE: 50M
+      PHP_UPLOAD_MAX_FILESIZE: 50M
+      TZ: "America/Sao_Paulo"
+    depends_on:
+          - container_tempguardian_db
+
+  container_tempguardian_db:
+    build:
+      context: .
+      dockerfile: dockerfile-db
+    container_name: tempguardian_db
+    restart: always
+    volumes:
+      - dbdata:/var/lib/mysql
+    ports:
+      - 4088:3306
+    networks:
+      - rede_default
+    environment:
+      MYSQL_ROOT_PASSWORD: tX84c=7OljSX
+      MYSQL_DATABASE: db_tempguardian
+      MYSQL_USER: suporte
+      MYSQL_PASSWORD: tX84c=7OljSX
+      TZ: "America/Sao_Paulo"
+      
+  container_tempguardian_phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    container_name: tempguardian_phpmyadmin
+    restart: always
+    ports:
+      - 4089:80
+    networks:
+      - rede_default
+    environment:
+      PMA_HOST: container_tempguardian_db
+      MYSQL_ROOT_PASSWORD: tX84c=7OljSX
+      UPLOAD_LIMIT: 50M
+      #PMA_USER: aluno
+      #PMA_PASSWORD: my-password
+      TZ: "America/Sao_Paulo"
+    depends_on:
+      - container_tempguardian_db
+  container_tempguardian_python:
+    build:
+      context: .
+      dockerfile: dockerfile-python
+    container_name: tempguardian_python
+    restart: always
+    volumes:
+      - ./_app:/app 
+    tty: true
+    networks:
+      - rede_default
+    environment:
+      TZ: "America/Sao_Paulo"
+
+volumes:
+  dbdata:
+
+networks:
+  rede_default:
+    external: true

@@ -1,0 +1,16 @@
+FROM python:3.7.5
+WORKDIR /app
+COPY /_app/requirements_python.txt .
+RUN pip install --no-cache-dir -r requirements_python.txt
+RUN apt-get update -y;
+RUN apt-get install -y nano;
+RUN apt-get install -y vim;
+RUN apt-get install -y net-tools;
+RUN apt-get install -y firefox-esr;
+RUN apt-get install -y cron
+RUN apt-get install -y iputils-ping
+COPY docker-entrypoint.sh /
+RUN chmod +x /docker-entrypoint.sh
+ENTRYPOINT [ "/docker-entrypoint.sh" ]
+CMD [ "sleep", "infinity" ]
+RUN ln -fs /usr/share/zoneinfo/America/Sao_Paulo /etc/localtime 
