@@ -1,7 +1,7 @@
 version: '3.2'
 
 services:
-  container_tempguardian_php-apache:
+  tempguardian_php-apache:
     build:
       context: .
       dockerfile: dockerfile-php-apache
@@ -25,9 +25,9 @@ services:
       PHP_UPLOAD_MAX_FILESIZE: 50M
       TZ: "America/Sao_Paulo"
     depends_on:
-          - container_tempguardian_db
+          - tempguardian_db
 
-  container_tempguardian_db:
+  tempguardian_db:
     build:
       context: .
       dockerfile: dockerfile-db
@@ -46,7 +46,7 @@ services:
       MYSQL_PASSWORD: tX84c=7OljSX
       TZ: "America/Sao_Paulo"
       
-  container_tempguardian_phpmyadmin:
+  tempguardian_phpmyadmin:
     image: phpmyadmin/phpmyadmin:latest
     container_name: tempguardian_phpmyadmin
     restart: always
@@ -55,15 +55,15 @@ services:
     networks:
       - rede_default
     environment:
-      PMA_HOST: container_tempguardian_db
+      PMA_HOST: tempguardian_db
       MYSQL_ROOT_PASSWORD: tX84c=7OljSX
       UPLOAD_LIMIT: 50M
       #PMA_USER: aluno
       #PMA_PASSWORD: my-password
       TZ: "America/Sao_Paulo"
     depends_on:
-      - container_tempguardian_db
-  container_tempguardian_python:
+      - tempguardian_db
+  tempguardian_python:
     build:
       context: .
       dockerfile: dockerfile-python

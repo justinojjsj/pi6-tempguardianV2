@@ -1,5 +1,5 @@
 <?php
-$host = 'container_tempguardian_db'; // Nome do serviço do MySQL no docker-compose.yml
+$host = 'tempguardian_db'; // Nome do serviço do MySQL no docker-compose.yml
 $usuario = 'root';
 $senha = 'tX84c=7OljSX';
 $banco = 'db_tempguardian';
