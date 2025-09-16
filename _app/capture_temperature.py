@@ -11,7 +11,7 @@ url = 'http://172.16.248.9/status.json'
 # Conexão com o banco de dados MySQL
 def connect_to_database():
     return mysql.connector.connect(
-        host="container_tempguardian_db",
+        host="tempguardian_db",
         user="root",    
         password="tX84c=7OljSX",  
         database="db_tempguardian",
