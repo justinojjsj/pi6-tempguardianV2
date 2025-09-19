@@ -97,7 +97,7 @@ Para funcionar os sistemas é necessário:
 
 9. Backup do banco de dados:
 
-    - É executado um backup do banco de dados todos os dias às 23:55 e disponibilizado na pasta _db/ANO-MÊS
+    - É executado um backup do banco de dados todos os dias às 00:05 e disponibilizado na pasta _db/ANO-MÊS
     - Os dados mais recentes estarão nos backups mais atuais (verificar a data)
-    - Será dado um push na branch db_e_log-atualizados todos os dias às 23:59
+    - Será dado um push na branch updateDB todos os dias às 00:07
     - O script que executa o backup está no .gitignore
