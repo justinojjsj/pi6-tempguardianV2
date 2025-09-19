@@ -1,11 +1,15 @@
 #!/bin/bash
 
+export PATH=/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
+
 # Caminho base do projeto
 db_dir="/home/silvajunior/Área de trabalho/desenvolvimento/pi6-tempguardianV2"
 cd "$db_dir" || { echo "Erro: não foi possível acessar o diretório $db_dir"; exit 1; }
 
 # Nome do commit com data/hora
 FileName=$(date '+%Y_%m_%d-%H_%M_%S')
+
+git="/usr/bin/git"
 
 # Git: atualiza e tenta o push
 git checkout updateDB
