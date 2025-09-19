@@ -5,7 +5,7 @@ python_e="/usr/local/bin/python"
 capture_temperature="/app/capture_temperature.py"
 date_hour=$(date '+%y/%m/%d %H:%M:%S')
 space=" "
-log_archive="execution_history.log"
+log_archive="/app/scripts/execution_history.log"
 
 #Script
 cd /app

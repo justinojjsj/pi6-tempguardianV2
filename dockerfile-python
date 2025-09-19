@@ -6,7 +6,6 @@ RUN apt-get update;
 RUN apt-get install -y nano;
 RUN apt-get install -y vim;
 RUN apt-get install -y net-tools;
-RUN apt-get install -y firefox-esr;
 RUN apt-get install -y cron
 RUN apt-get install -y iputils-ping
 COPY docker-entrypoint.sh /

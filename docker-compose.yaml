@@ -35,6 +35,7 @@ services:
     restart: always
     volumes:
       - dbdata:/var/lib/mysql
+      - ./_db:/db
     ports:
       - 4088:3306
     networks:

@@ -4,10 +4,10 @@
 /etc/init.d/cron start
 
 # Atribui permissões de execução nos scripts
-chmod u+x /app/crontab_scheduler.sh
-chmod u+x /app/script_executor.sh
+chmod u+x /app/scripts/crontab_scheduler.sh
+chmod u+x /app/scripts/script_executor.sh
 
 # Executa o script
-/app/crontab_scheduler.sh
+/app/scripts/crontab_scheduler.sh
 
 exec "$@"
