@@ -30,7 +30,7 @@ CREATE TABLE `weather_history` (
   `date` date DEFAULT NULL,
   `hour` time DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10763 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Table with historical temperature and humidity data';
+) ENGINE=InnoDB AUTO_INCREMENT=10764 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Table with historical temperature and humidity data';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -10802,7 +10802,8 @@ INSERT INTO `weather_history` VALUES
 (10759,27.19,34.28,'2025-07-01','23:20:01'),
 (10760,27.12,34.37,'2025-07-01','23:30:02'),
 (10761,27.10,34.35,'2025-07-01','23:40:01'),
-(10762,27.14,34.31,'2025-07-01','23:50:01');
+(10762,27.14,34.31,'2025-07-01','23:50:01'),
+(10763,24.58,45.50,'2025-09-19','20:00:01');
 /*!40000 ALTER TABLE `weather_history` ENABLE KEYS */;
 UNLOCK TABLES;
 commit;
@@ -10816,4 +10817,4 @@ commit;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*M!100616 SET NOTE_VERBOSITY=@OLD_NOTE_VERBOSITY */;
 
--- Dump completed on 2025-09-19 19:56:01
+-- Dump completed on 2025-09-19 20:03:40
