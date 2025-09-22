@@ -17,12 +17,11 @@ git add --all
 git commit -m "Atualização do banco $FileName"
 
 # Verifica se o push foi bem-sucedido
-if GIT_SSH_COMMAND="ssh -i ~/.ssh/id_ed25519 -o IdentitiesOnly=yes" git push; then
+if git push; then
     push_status="Push executado com sucesso"
 else
     push_status="Falha ao executar o push"
 fi
-
 
 # Registro em log
 date_hour=$(date '+%y/%m/%d %H:%M:%S')
