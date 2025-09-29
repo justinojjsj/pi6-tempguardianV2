@@ -11,6 +11,9 @@ FileName=$(date '+%Y_%m_%d-%H_%M_%S')
 
 git="/usr/bin/git"
 
+# Modificano permissoes
+chown -R silvajunior:silvajunior .
+
 # Git: atualiza e tenta o push
 git checkout updateDB
 git add --all
