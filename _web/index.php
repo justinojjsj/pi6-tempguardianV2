@@ -8,6 +8,10 @@ $labels = [];
 $temperatures = [];
 $humidities = [];
 
+$average_labels = [];
+$average_temperatura = [];
+$average_humidity = [];
+
 if ($conn) {
     $sql = "SELECT * FROM weather_history ORDER BY date DESC, hour DESC LIMIT 10";
     $result = mysqli_query($conn, $sql);
@@ -19,8 +23,25 @@ if ($conn) {
             $humidities[] = $row["humidity"];
         }
     }
+
+    $sql_average = "SELECT date, AVG(temperature) AS media_temp, AVG(humidity) AS media_umidade
+               FROM weather_history
+               where date >= DATE_SUB(CURDATE(), INTERVAL 30 DAY)
+               GROUP BY date
+               ORDER BY date ASC, hour DESC";
+
+    $result_medias = mysqli_query($conn, $sql_average);
+
+    if ($result_medias && mysqli_num_rows($result_medias) > 0) {
+        while ($row = mysqli_fetch_assoc($result_medias)) {
+            $average_labels[] = $row["date"];
+            $average_temperatura[] = round($row["media_temp"], 2);
+            $average_humidity[] = round($row["media_umidade"], 2);
+        }
+    }
 }
 ?>
+
 
 <head>
     <?php include "./header.php"; ?>
@@ -34,6 +55,10 @@ if ($conn) {
         const labels = <?php echo json_encode(array_reverse($labels)); ?>;
         const temperatures = <?php echo json_encode(array_reverse($temperatures)); ?>;
         const humidities = <?php echo json_encode(array_reverse($humidities)); ?>;
+
+        const mediaLabels = <?php echo json_encode($average_labels); ?>;
+        const mediaTemperaturas = <?php echo json_encode($average_temperatura); ?>;
+        const mediaUmidades = <?php echo json_encode($average_humidity); ?>;
 
         window.onload = function() {
             const ctx = document.getElementById('tempHumidityChart').getContext('2d');
@@ -77,6 +102,48 @@ if ($conn) {
                         }
                     }
                 }
+            });
+            const avgTempCtx = document.getElementById('averageTempChart').getContext('2d');
+            new Chart(avgTempCtx, {
+            type: 'line',
+            data: {
+                labels: mediaLabels,
+                datasets: [{
+                label: 'Média de Temperatura (°C)',
+                data: mediaTemperaturas,
+                borderColor: 'rgba(255, 99, 132, 1)',
+                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                fill: true,
+                tension: 0.3
+                }]
+            },
+            options: {
+                scales: {
+                y: { beginAtZero: false, title: { display: true, text: '°C' } },
+                x: { title: { display: true, text: 'Dia' } }
+                }
+            }
+            });
+            const avgHumCtx = document.getElementById('averageHumidityChart').getContext('2d');
+            new Chart(avgHumCtx, {
+            type: 'line',
+            data: {
+                labels: mediaLabels,
+                datasets: [{
+                label: 'Média de Umidade (%)',
+                data: mediaUmidades,
+                borderColor: 'rgba(54, 162, 235, 1)',
+                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                fill: true,
+                tension: 0.3
+                }]
+            },
+            options: {
+                scales: {
+                y: { beginAtZero: false, title: { display: true, text: '%' } },
+                x: { title: { display: true, text: 'Dia' } }
+                }
+            }
             });
         };
     </script>
@@ -137,6 +204,23 @@ if ($conn) {
 
             mysqli_close($conn);
             ?>
+        </section>
+
+        <section class="mb-5 mt-5">
+            <h2 class="text-center mb-4">Média de Temperatura por Dia (Últimos 30 dias)</h2>
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <canvas id="averageTempChart" height="100"></canvas>
+                </div>
+            </div>
+        </section>
+        <section class="mb-5">
+            <h2 class="text-center mb-4">Média de Umidade por Dia (Últimos 30 dias)</h2>
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <canvas id="averageHumidityChart" height="100"></canvas>
+                </div>
+            </div>
         </section>
     </div>
 
