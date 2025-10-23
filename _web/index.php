@@ -24,19 +24,19 @@ if ($conn) {
         }
     }
 
-    $sql_average = "SELECT date, AVG(temperature) AS media_temp, AVG(humidity) AS media_umidade
+    $sql_average = "SELECT date, AVG(temperature) AS average_temp, AVG(humidity) AS average_humidity
                FROM weather_history
                where date >= DATE_SUB(CURDATE(), INTERVAL 30 DAY)
                GROUP BY date
                ORDER BY date ASC, hour DESC";
 
-    $result_medias = mysqli_query($conn, $sql_average);
+    $result_average = mysqli_query($conn, $sql_average);
 
-    if ($result_medias && mysqli_num_rows($result_medias) > 0) {
-        while ($row = mysqli_fetch_assoc($result_medias)) {
+    if ($result_average && mysqli_num_rows($result_average) > 0) {
+        while ($row = mysqli_fetch_assoc($result_average)) {
             $average_labels[] = $row["date"];
-            $average_temperatura[] = round($row["media_temp"], 2);
-            $average_humidity[] = round($row["media_umidade"], 2);
+            $average_temperatura[] = round($row["average_temp"], 2);
+            $average_humidity[] = round($row["average_humidity"], 2);
         }
     }
 }
@@ -56,9 +56,9 @@ if ($conn) {
         const temperatures = <?php echo json_encode(array_reverse($temperatures)); ?>;
         const humidities = <?php echo json_encode(array_reverse($humidities)); ?>;
 
-        const mediaLabels = <?php echo json_encode($average_labels); ?>;
-        const mediaTemperaturas = <?php echo json_encode($average_temperatura); ?>;
-        const mediaUmidades = <?php echo json_encode($average_humidity); ?>;
+        const average_labels = <?php echo json_encode($average_labels); ?>;
+        const average_temperatures = <?php echo json_encode($average_temperatura); ?>;
+        const average_humidities = <?php echo json_encode($average_humidity); ?>;
 
         window.onload = function() {
             const ctx = document.getElementById('tempHumidityChart').getContext('2d');
@@ -107,10 +107,10 @@ if ($conn) {
             new Chart(avgTempCtx, {
             type: 'line',
             data: {
-                labels: mediaLabels,
+                labels: average_labels,
                 datasets: [{
                 label: 'Média de Temperatura (°C)',
-                data: mediaTemperaturas,
+                data: average_temperatures,
                 borderColor: 'rgba(255, 99, 132, 1)',
                 backgroundColor: 'rgba(255, 99, 132, 0.2)',
                 fill: true,
@@ -128,10 +128,10 @@ if ($conn) {
             new Chart(avgHumCtx, {
             type: 'line',
             data: {
-                labels: mediaLabels,
+                labels: average_labels,
                 datasets: [{
                 label: 'Média de Umidade (%)',
-                data: mediaUmidades,
+                data: average_humidities,
                 borderColor: 'rgba(54, 162, 235, 1)',
                 backgroundColor: 'rgba(54, 162, 235, 0.2)',
                 fill: true,
